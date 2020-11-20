@@ -46,8 +46,8 @@ public:
     MaxRankTree(int rootLabel);                       //Constructor
     MaxRankTree& operator=(const MaxRankTree &other); //copy assignment operator
 
-    int findMaxRank();
-    int findNode(int rank);
+    std::pair<int,int> findMaxRank();
+    
 
     virtual std::vector<Tree*> getChildren() const;
 
