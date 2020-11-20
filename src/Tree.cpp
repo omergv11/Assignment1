@@ -27,7 +27,8 @@ Tree& Tree:: operator=(const Tree &other) {
 }
 
 
-const Tree& Tree::operator=(Tree &&other){
+Tree& Tree::operator=(Tree&& other) {
+    std::cout << "helooo "<< std::endl;
     if(this==&other)
         return *this;
     clear();
@@ -115,34 +116,18 @@ MaxRankTree& MaxRankTree::operator=(const MaxRankTree &other) {
     return *this;
 }
 
-int MaxRankTree::findMaxRank() {
+std::pair<int,int> MaxRankTree::findMaxRank() {
     if(Tree::getChildren().empty())  //base case
-        return 0;
+        return std::pair<int,int>(0,getRoot());
     size_t numChild = getChildren().size();
-    int max = getChildren().size();
+    std::pair<int,int> max(getChildren().size(),getRoot());
     for(size_t i = 0;i<numChild;i++){
-        int c = ((MaxRankTree*)getChildren()[i])->findMaxRank();
-        //find max number of kids in subtree recursively
-        if(c>max)
-            max =c;   //assign new max number
+        std::pair<int,int> c = ((MaxRankTree*)getChildren()[i])->findMaxRank();
+        //find max number of kids and their index in subtree recursively
+        if(c.first>max.first)
+            max =c;   //assign new node with max children
     }
     return max;
-}
-
-int MaxRankTree::findNode(int rank) {
-    int numChild = getChildren().size();
-    if(numChild==rank)
-        //return first node with max children
-        return Tree::getRoot();
-   // size_t numChild = getChildren().size();
-    int node=-1;
-    for( int i = 0;i<numChild;i++){
-        int child = ((MaxRankTree*)getChildren()[i])->findNode(rank);
-        if(child!=-1)
-            //found the node
-            node=child;
-    }
-    return node;
 }
 
 std::vector<Tree*> MaxRankTree:: getChildren() const{
@@ -156,8 +141,8 @@ Tree* MaxRankTree::clone() const {
 int MaxRankTree::traceTree() {
     if(getChildren().empty())  //base case
         return getRoot();
-    int rank = findMaxRank();  //find max children
-    return findNode(rank);     //find node with max children
+    std::pair<int,int> rank = findMaxRank();  //find node to disconnect
+    return rank.second;     //return nodes index
 }
 
 RootTree:: RootTree(int rootLabel1):Tree(rootLabel1){
