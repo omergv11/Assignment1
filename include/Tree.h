@@ -11,7 +11,7 @@ public:
     Tree(const Tree &tree);              //copy Constructor
     Tree (Tree &&other);                 //move Constructor
     Tree& operator=(const Tree &other);  //copy assignment operator
-    const Tree& operator=(Tree &&other); //move assignment operator
+    Tree& operator=(Tree &&other); //move assignment operator
     virtual ~Tree();                     //Destructor
     void clear();
 
@@ -32,7 +32,6 @@ private:
 class CycleTree: public Tree{
 public:
     CycleTree(int rootLabel, int currCycle);          //Constructor
-    CycleTree& operator=(const CycleTree &other);     //copy assignment operator
 
     virtual Tree* clone() const;
     virtual int traceTree();
@@ -44,10 +43,7 @@ private:
 class MaxRankTree: public Tree{
 public:
     MaxRankTree(int rootLabel);                       //Constructor
-    MaxRankTree& operator=(const MaxRankTree &other); //copy assignment operator
-
     std::pair<int,int> findMaxRank();
-    
 
     virtual std::vector<Tree*> getChildren() const;
 
@@ -58,7 +54,6 @@ public:
 class RootTree: public Tree{
 public:
     RootTree(int rootLabel1);                   //Constructor
-    RootTree& operator=(const RootTree &other); //copy assignment operator
 
     virtual Tree* clone() const;
     virtual int traceTree();
