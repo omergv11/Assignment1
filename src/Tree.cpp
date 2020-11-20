@@ -19,6 +19,7 @@ Tree:: Tree(Tree &&other):node(other.node),children(){
 }
 
 Tree& Tree:: operator=(const Tree &other) {
+    clear();
     for(size_t i=0;i<other.children.size();i++){
         addChild(*other.children[i]);
     }
@@ -28,7 +29,6 @@ Tree& Tree:: operator=(const Tree &other) {
 
 
 Tree& Tree::operator=(Tree&& other) {
-    std::cout << "helooo "<< std::endl;
     if(this==&other)
         return *this;
     clear();
@@ -84,12 +84,6 @@ CycleTree:: CycleTree(int rootLabel1,int currCycle)
 
 }
 
-CycleTree& CycleTree::operator=(const CycleTree &other) {
-    Tree::operator=(other);
-    currCycle = other.currCycle;
-    return *this;
-}
-
 Tree* CycleTree::clone() const {
     return new CycleTree(*this);
 }
@@ -109,11 +103,6 @@ int CycleTree::traceTree() {
 
 MaxRankTree:: MaxRankTree(int rootLabel1):Tree(rootLabel1){
 
-}
-
-MaxRankTree& MaxRankTree::operator=(const MaxRankTree &other) {
-    Tree::operator=(other);
-    return *this;
 }
 
 std::pair<int,int> MaxRankTree::findMaxRank() {
@@ -147,11 +136,6 @@ int MaxRankTree::traceTree() {
 
 RootTree:: RootTree(int rootLabel1):Tree(rootLabel1){
 
-}
-
-RootTree& RootTree::operator=(const RootTree &other) {
-    Tree::operator=(other);
-    return *this;
 }
 
 Tree* RootTree::clone() const {
